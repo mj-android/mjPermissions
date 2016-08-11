@@ -1,0 +1,16 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="net.djcp.mjpermissions">
+
+    <application android:allowBackup="true"
+                 android:label="@string/app_name"
+                 android:supportsRtl="true"
+    >
+        <activity android:name="net.djcp.mjpermissions.mjPermissionsActivity" android:theme="@style/Theme.AppCompat.Translucent" />
+        <receiver android:name="net.djcp.mjpermissions.mjPermissions$Receiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="net.djcp.mjpermissions.PERMISSION_RESULT_INTENT" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
