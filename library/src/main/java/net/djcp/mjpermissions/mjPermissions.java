@@ -170,9 +170,6 @@ public class mjPermissions {
             if (mListener != null) {
                 mListener.onPermissionGranted(grantedPermissions);
                 mListener.onPermissionDenied(deniedPermissions);
-                if (grantedPermissions.size() > 0) {
-                    mListener.onPermissionDeniedAll();
-                }
                 if (deniedPermissions.size() == 0) {
                     mListener.onPermissionGrantedAll();
                 }
@@ -182,13 +179,11 @@ public class mjPermissions {
 
     public interface OnPermissionListener {
 
-        void onPermissionGranted(List<String> permissions);
+        public void onPermissionGrantedAll();
 
-        void onPermissionDenied(List<String> permissions);
+        public void onPermissionGranted(List<String> permissions);
 
-        void onPermissionDeniedAll();
-
-        void onPermissionGrantedAll();
+        public void onPermissionDenied(List<String> permissions);
 
     }
 

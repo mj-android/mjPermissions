@@ -29,7 +29,7 @@ ext {
     userOrg = 'blackdole'
     groupId = 'net.djcp'
     artifactId = 'mjpermissions'
-    version = '1.0.3'
+    version = '1.0.5'
     description = 'A wrapper for Android 6.0 permissions'
     website = 'https://github.com/mj-android/mjPermissions.git'
     licences = ['Apache-2.0']
