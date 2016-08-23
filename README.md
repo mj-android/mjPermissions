@@ -17,7 +17,7 @@ mjPermissions can easily handle the permissions in the Android M.
 ###Gradle
 ```groovy
 dependencies { 
-    compile 'net.djcp:mjpermissions:1.0.0'
+    compile 'net.djcp:mjpermissions:1.0.1'
 }
 ```
 
