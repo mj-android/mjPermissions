@@ -40,21 +40,25 @@ public class MainActivity extends AppCompatActivity {
                 .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
+    // Optional
     @OnPermissionGranted(Manifest.permission.CAMERA)
     public void cameraGranted() {
 
     }
-
+    
+    // Optional
     @OnPermissionDenied(Manifest.permission.CAMERA)
     public void cameraDenied() {
 
     }
 
+    // Optional
     @OnPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void storageGranted() {
 
     }
 
+    // Optional
     @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     public void storageDenied() {
     
