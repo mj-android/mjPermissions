@@ -166,8 +166,12 @@ public class mjPermissions {
             }
 
             if (mListener != null) {
-                mListener.onPermissionGranted(grantedPermissions);
-                mListener.onPermissionDenied(deniedPermissions);
+                if (grantedPermissions.size() > 0) {
+                    mListener.onPermissionGranted(grantedPermissions);
+                }
+                if (deniedPermissions.size() > 0) {
+                    mListener.onPermissionDenied(deniedPermissions);
+                }
                 if (deniedPermissions.size() == 0) {
                     mListener.onPermissionGrantedAll();
                 }
