@@ -133,10 +133,8 @@ public class mjPermissions {
                 }
             }
 
-            if (grantedPermissions.size() == 0) {
-                if (deniedPermissions.size() > 0 && mDeniedAllMethods.size() > 0) {
-                    invokeMethod(mDeniedAllMethods.get(0));
-                }
+            if (deniedPermissions.size() > 0 && mDeniedAllMethods.size() > 0) {
+                invokeMethod(mDeniedAllMethods.get(0));
             }
 
             if (grantedPermissions.size() > 0) {
