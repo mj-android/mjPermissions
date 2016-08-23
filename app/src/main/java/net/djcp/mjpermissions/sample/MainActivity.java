@@ -34,17 +34,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mjPermissions.with(this).request(Manifest.permission.CAMERA);
+        mjPermissions.with(this).request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    @OnPermissionGranted
+    public void onPermissionGranted() {
+        Log.d(TAG, "onPermissionGranted");
+    }
+
+    @OnPermissionDenied
+    public void onPermissionDenied() {
+        Log.d(TAG, "onPermissionDenied");
     }
 
     @OnPermissionGranted(Manifest.permission.CAMERA)
-    public void OnPermissionGranted() {
-        Log.i(TAG, "OnPermissionGranted");
+    public void onCameraGranted() {
+        Log.d(TAG, "onCameraGranted");
     }
 
     @OnPermissionDenied(Manifest.permission.CAMERA)
-    public void OnPermissionDenied() {
-        Log.i(TAG, "OnPermissionDenied");
+    public void onCameraDenied() {
+        Log.d(TAG, "onCameraDenied");
+    }
+
+    @OnPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void onStrorageGranted() {
+        Log.d(TAG, "onStrorageGranted");
+    }
+
+    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void onStrorageDenied() {
+        Log.d(TAG, "onStrorageDenied");
     }
 
     @Override

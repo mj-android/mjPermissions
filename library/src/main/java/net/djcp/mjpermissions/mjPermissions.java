@@ -9,9 +9,9 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import net.djcp.mjpermissions.annotations.OnPermissionDenied;
 import net.djcp.mjpermissions.annotations.OnPermissionGranted;
-import net.djcp.mjpermissions.annotations.OnPermissionGrantedAll;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -20,8 +20,9 @@ public class mjPermissions {
     private static final String TAG = mjPermissions.class.getSimpleName();
     private static Context mContext;
     private static int mId;
-    private static Map<String, Method> mGrantedAllMethods;
+    private static List<Method> mGrantedAllMethods;
     private static Map<String, Method> mGrantedMethods;
+    private static List<Method> mDeniedAllMethods;
     private static Map<String, Method> mDeniedMethods;
     private static OnPermissionListener mListener;
 
@@ -29,8 +30,9 @@ public class mjPermissions {
         Random rand = new Random();
         mId = rand.nextInt();
         mListener = null;
-        mGrantedAllMethods = new HashMap<>();
+        mGrantedAllMethods = new ArrayList<>();
         mGrantedMethods = new HashMap<>();
+        mDeniedAllMethods = new ArrayList<>();
         mDeniedMethods = new HashMap<>();
     }
 
@@ -40,15 +42,21 @@ public class mjPermissions {
             if (method.isAnnotationPresent(OnPermissionGranted.class)) {
                 OnPermissionGranted onPermissionGranted = method.getAnnotation(OnPermissionGranted.class);
                 for (int i = 0; i< onPermissionGranted.value().length; i++) {
-                    mGrantedMethods.put(onPermissionGranted.value()[i], method);
+                    if (onPermissionGranted.value()[i].equals("All")) {
+                        mGrantedAllMethods.add(method);
+                    } else {
+                        mGrantedMethods.put(onPermissionGranted.value()[i], method);
+                    }
                 }
             } else if (method.isAnnotationPresent(OnPermissionDenied.class)) {
                 OnPermissionDenied onPermissionDenied = method.getAnnotation(OnPermissionDenied.class);
                 for (int i = 0; i< onPermissionDenied.value().length; i++) {
-                    mDeniedMethods.put(onPermissionDenied.value()[i], method);
+                    if (onPermissionDenied.value()[i].equals("All")) {
+                        mDeniedAllMethods.add(method);
+                    } else {
+                        mDeniedMethods.put(onPermissionDenied.value()[i], method);
+                    }
                 }
-            } else if (method.isAnnotationPresent(OnPermissionGrantedAll.class)) {
-                mGrantedAllMethods.put("All", method);
             }
         }
     }
@@ -127,6 +135,18 @@ public class mjPermissions {
                 }
             }
 
+            if (deniedPermissions.size() == 0) {
+                if (grantedPermissions.size() > 0 && mGrantedAllMethods.size() > 0) {
+                    invokeMethod(mGrantedAllMethods.get(0));
+                }
+            }
+
+            if (grantedPermissions.size() == 0) {
+                if (deniedPermissions.size() > 0 && mDeniedAllMethods.size() > 0) {
+                    invokeMethod(mDeniedAllMethods.get(0));
+                }
+            }
+
             if (grantedPermissions.size() > 0) {
                 List<Method> grantedMethods = new ArrayList<>();
                 for (int i = 0; i < grantedPermissions.size(); i++) {
@@ -153,15 +173,14 @@ public class mjPermissions {
                 for (int i = 0; i < deniedMethods.size(); i++) {
                     invokeMethod(deniedMethods.get(i));
                 }
-            } else {
-                if (mGrantedAllMethods.size() > 0) {
-                    invokeMethod(mGrantedAllMethods.get(0));
-                }
             }
 
             if (mListener != null) {
                 mListener.onPermissionGranted(grantedPermissions);
                 mListener.onPermissionDenied(deniedPermissions);
+                if (grantedPermissions.size() > 0) {
+                    mListener.onPermissionDeniedAll();
+                }
                 if (deniedPermissions.size() == 0) {
                     mListener.onPermissionGrantedAll();
                 }
@@ -174,6 +193,8 @@ public class mjPermissions {
         void onPermissionGranted(List<String> permissions);
 
         void onPermissionDenied(List<String> permissions);
+
+        void onPermissionDeniedAll();
 
         void onPermissionGrantedAll();
 
