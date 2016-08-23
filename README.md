@@ -26,6 +26,7 @@ dependencies {
 import net.djcp.mjpermissions.mjPermissions;
 import net.djcp.mjpermissions.annotations.OnPermissionDenied;
 import net.djcp.mjpermissions.annotations.OnPermissionGranted;
+import net.djcp.mjpermissions.annotations.OnPermissionGrantedAll;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         
         mjPermissions.with(this)
-                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                //.setOnPermissionListener(this)
+                .request(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     // Optional
@@ -53,14 +55,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Optional
-    @OnPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void storageGranted() {
+    @OnPermissionGranted({Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void onPermissionGranted() {
 
     }
 
     // Optional
-    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    public void storageDenied() {
+    @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void onPermissionDenied() {
+    
+    }
+    
+    // Optional
+    @OnPermissionGrantedAll
+    public void onPermissionGrantedAll() {
     
     }
 }

@@ -48,8 +48,7 @@ public class mjPermissions {
                     mDeniedMethods.put(onPermissionDenied.value()[i], method);
                 }
             } else if (method.isAnnotationPresent(OnPermissionGrantedAll.class)) {
-                OnPermissionGrantedAll onPermissionGranted = method.getAnnotation(OnPermissionGrantedAll.class);
-                mGrantedAllMethods.put(onPermissionGranted.value(), method);
+                mGrantedAllMethods.put("All", method);
             }
         }
     }
@@ -71,7 +70,7 @@ public class mjPermissions {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    public void request(@NonNull @Size(min = 1) String... permissions) {
+    public mjPermissions request(@NonNull @Size(min = 1) String... permissions) {
         if (isOverMarshmallow()) {
             if (permissions == null || permissions.length == 0) {
                 throw new IllegalArgumentException("The permissions to request are missing");
@@ -84,10 +83,12 @@ public class mjPermissions {
             intent.putExtra(Constants.REQUEST_ID, mId);
             mContext.startActivity(intent);
         }
+        return mjPermissions.this;
     }
 
-    public void setOnPermissionListener(OnPermissionListener listener) {
+    public mjPermissions setOnPermissionListener(OnPermissionListener listener) {
         mListener = listener;
+        return mjPermissions.this;
     }
 
     public static mjPermissions with(Activity activity) {
