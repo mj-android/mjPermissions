@@ -9,7 +9,7 @@ mjPermissions can easily handle the permissions in the Android M.
 <dependency>
   <groupId>net.djcp</groupId>
   <artifactId>mjpermissions</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -17,7 +17,7 @@ mjPermissions can easily handle the permissions in the Android M.
 ###Gradle
 ```groovy
 dependencies { 
-    compile 'net.djcp:mjpermissions:1.0.1'
+    compile 'net.djcp:mjpermissions:1.0.2'
 }
 ```
 
@@ -26,7 +26,6 @@ dependencies {
 import net.djcp.mjpermissions.mjPermissions;
 import net.djcp.mjpermissions.annotations.OnPermissionDenied;
 import net.djcp.mjpermissions.annotations.OnPermissionGranted;
-import net.djcp.mjpermissions.annotations.OnPermissionGrantedAll;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,37 +38,43 @@ public class MainActivity extends AppCompatActivity {
         
         mjPermissions.with(this)
                 //.setOnPermissionListener(this)
-                .request(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+    }
+
+    // Optional
+    @OnPermissionGranted
+    public void onPermissionGranted() {
+        
+    }
+
+    // Optional
+    @OnPermissionDenied
+    public void onPermissionDenied() {
+        
     }
 
     // Optional
     @OnPermissionGranted(Manifest.permission.CAMERA)
-    public void cameraGranted() {
-
+    public void onCameraGranted() {
+        
     }
-    
+
     // Optional
     @OnPermissionDenied(Manifest.permission.CAMERA)
-    public void cameraDenied() {
-
+    public void onCameraDenied() {
+        
     }
 
     // Optional
-    @OnPermissionGranted({Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void onPermissionGranted() {
-
+    @OnPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void onStrorageGranted() {
+        
     }
 
     // Optional
-    @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void onPermissionDenied() {
-    
-    }
-    
-    // Optional
-    @OnPermissionGrantedAll
-    public void onPermissionGrantedAll() {
-    
+    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    public void onStrorageDenied() {
+        
     }
 }
 ```

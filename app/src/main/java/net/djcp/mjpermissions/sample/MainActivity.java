@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mjPermissions.with(this).request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        mjPermissions.with(this)
+                //.setOnPermissionListener(this)
+                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @OnPermissionGranted
