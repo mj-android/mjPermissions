@@ -99,19 +99,11 @@ public class mjPermissions {
         return mjPermissions.this;
     }
 
-    public static mjPermissions with(Activity activity) {
-        if (activity == null) {
-            throw new IllegalArgumentException("Null Fragment Reference");
+    public static mjPermissions with(Context context) {
+        if (context == null) {
+            throw new NullPointerException();
         }
-        mContext = activity;
-        return new mjPermissions();
-    }
-
-    public static mjPermissions with(Fragment fragment) {
-        if (fragment == null) {
-            throw new IllegalArgumentException("Null Fragment Reference");
-        }
-        mContext = fragment.getActivity();
+        mContext = context;
         return new mjPermissions();
     }
 
