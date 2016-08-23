@@ -9,7 +9,7 @@ mjPermissions can easily handle the permissions in the Android M.
 <dependency>
   <groupId>net.djcp</groupId>
   <artifactId>mjpermissions</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
